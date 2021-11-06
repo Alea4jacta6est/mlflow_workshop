@@ -1,10 +1,9 @@
-import click
 import keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPooling2D
 from tensorflow.keras import optimizers
 
-from preprocess import get_processed_data
+from src.preprocess import get_processed_data
 
 
 def create_keras_model(num_classes: int):
@@ -37,10 +36,6 @@ def create_keras_model(num_classes: int):
     return model
 
 
-@click.command()
-@click.argument('batch_size', type=int, default=128)
-@click.argument('num_classes', type=int, default=10)
-@click.argument('epochs', type=int, default=5)
 def train_and_save(num_classes: int, batch_size: int, epochs: int):
     """Trains created model with given number of epochs, batch size etc.
 
@@ -49,7 +44,7 @@ def train_and_save(num_classes: int, batch_size: int, epochs: int):
         batch_size (int): batch size
         epochs (int): epochs number
     """
-    model_name = f'models/mnist_model_{epochs}.h5'
+    model_name = f'models/keras_mnist_model.h5'
     x_train, y_train, x_test, y_test = get_processed_data()
     model = create_keras_model(num_classes)
     hist = model.fit(x_train,
@@ -61,7 +56,7 @@ def train_and_save(num_classes: int, batch_size: int, epochs: int):
     print("The model has been successfully trained")
     model.save(model_name)
     print(f"Saving the model as {model_name}")
-    print(hist)
+    return model, model_name
 
 
 if __name__ == "__main__":
