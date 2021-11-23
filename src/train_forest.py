@@ -1,3 +1,4 @@
+import os
 import joblib
 from sklearn.ensemble import RandomForestClassifier
 
@@ -15,6 +16,7 @@ def train_and_save_tree(n_estimators: int):
     x_train = x_train.reshape((nsamples, nx * ny))
     forest = RandomForestClassifier(n_estimators=n_estimators)
     forest = forest.fit(x_train, y_train)
+    os.makedirs("models", exist_ok=True)
     joblib.dump(forest, f"models/random_forest.joblib")
     return forest, f"models/random_forest.joblib"
 
