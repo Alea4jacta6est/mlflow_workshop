@@ -8,6 +8,7 @@ from src.train_forest import train_and_save_tree
 from src.evaluate import get_and_save_scores
 
 MLFLOW_TRACKING_URI = "http://0.0.0.0:5000"
+# For example, you need to store data in GCP:
 os.environ[
     'GOOGLE_APPLICATION_CREDENTIALS'] = 'secrets/mlflow-server-credentials.json'
 EXPERIMENTS = ["Keras", "RFC"]
